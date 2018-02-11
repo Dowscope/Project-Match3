@@ -202,6 +202,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 577705156}
+  - component: {fileID: 577705157}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -216,9 +217,29 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 577705155}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14199018, y: -0.025299078, z: -0.0234375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &577705157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 577705155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5a2631417acb54c9746d575477291e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameBoardPreFab: {fileID: 1357973953477190, guid: 7ba387fab4f46a3439d0641271e4c623,
+    type: 2}
+  GemPreFabs:
+  - {fileID: 1027578137596432, guid: 9197d62022f257940aee63f26ffaa772, type: 2}
+  - {fileID: 1257320429639060, guid: 5ff9d966bb052f742b990a1d6169bede, type: 2}
+  - {fileID: 1585713010811056, guid: 2f1ffc3538346ac43a91acba93db55af, type: 2}
+  - {fileID: 1503377398264984, guid: ddfc7a857bd90a64a88c03a07a2b313c, type: 2}
+  - {fileID: 1370247904998784, guid: 4de9b89be16d94746bfe474693b0b54f, type: 2}
+  - {fileID: 1653430439941556, guid: 4e2e0a1f5109fdc40ae5eb732a847fbc, type: 2}
