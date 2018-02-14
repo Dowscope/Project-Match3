@@ -22,20 +22,39 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		CheckEmpty ();
+
+		if (Input.GetMouseButtonUp (0)) {
+			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			mousePos.x = Mathf.Floor(mousePos.x - board.transform.position.x);
+			mousePos.y = Mathf.Floor(mousePos.y - board.transform.position.y);
+			Debug.Log (mousePos);
+		}
 	}
 
 	void InitializeBoard(){
 
 		for (int col = 0; col < NUM_COLS; col++) {
 			Transform columnTransform = board.transform.GetChild(col);
-			for (int row = 0; row < NUM_ROWS; row++) {
-				Transform rowTransform = columnTransform.GetChild(row);
-				int randomSprite = Random.Range (0, GemPreFabs.Count);
-				Instantiate (GemPreFabs [randomSprite],
-					rowTransform.position,
-					Quaternion.identity,
-					rowTransform);
+
+			SpawnTile (columnTransform);
+		}
+	}
+
+	void SpawnTile(Transform column) {
+		Transform rowTransform = column.GetChild(NUM_ROWS - 1);
+		int randomSprite = Random.Range (0, GemPreFabs.Count);
+		Instantiate (GemPreFabs [randomSprite],
+			rowTransform.position,
+			Quaternion.identity,
+			rowTransform);
+	}
+
+	void CheckEmpty() {
+		for (int col = 0; col < NUM_COLS; col++) {
+			Transform columnTransform = board.transform.GetChild(col);
+			if (columnTransform.GetChild (NUM_ROWS - 1).childCount == 0) {
+				SpawnTile (columnTransform);
 			}
 		}
 	}
