@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TileMovement : MonoBehaviour {
-
+	
 	Vector3 endPosition;
 	float speed = 5f;
 	bool moving = false;
 
 	// Use this for initialization
 	void Start () {
-		speed = Random.Range (3f, 8f);
+		speed = Random.Range (5f, 10f);
 	}
 	
 	// Update is called once per frame
@@ -27,9 +27,11 @@ public class TileMovement : MonoBehaviour {
 			} else {
 				transform.position = newPos;
 			}
+		} else {
+			checkTileBelow ();
+			CheckMatching ();
 		}
 
-		checkTileBelow ();
 	}
 
 	public void Move(Vector3 pos){
@@ -53,5 +55,109 @@ public class TileMovement : MonoBehaviour {
 				Move (transform.parent.position);
 			}
 		}
+	}
+
+	void CheckMatching() {
+		Transform row = transform.parent;
+		Transform column = row.parent;
+
+		List<Transform> listOfTilesRow = CheckNeighbourAbove (transform);
+		List<Transform> listOfTilesColRight = CheckNeighbourRight (transform);
+		List<Transform> listOfTilesColLeft = CheckNeighbourRight (transform);
+
+		if (listOfTilesRow.Count >= 3) {
+			foreach (Transform i in listOfTilesRow) {
+				Destroy (i.gameObject);
+			}
+		}
+
+		if (listOfTilesColRight.Count >= 3) {
+			foreach (Transform i in listOfTilesColRight) {
+				Destroy (i.gameObject);
+			}
+		}
+
+		if (listOfTilesColLeft.Count >= 3) {
+			foreach (Transform i in listOfTilesColLeft) {
+				Destroy (i.gameObject);
+			}
+		}
+	}
+
+	List<Transform> CheckNeighbourAbove(Transform t) {
+		List<Transform> tiles = new List<Transform>();
+		tiles.Add (t);
+
+		Transform row = t.parent;
+		Transform column = row.parent;
+
+		int siblingIndex = row.GetSiblingIndex ();
+		if (siblingIndex < column.childCount - 1) {
+			Transform rowAbove = column.GetChild (siblingIndex + 1);
+			if (rowAbove.childCount != 0) {
+				Transform tileAbove = rowAbove.GetChild (0);
+				if (t.gameObject.name == tileAbove.gameObject.name) {
+					List<Transform> moreTiles = CheckNeighbourAbove (tileAbove);
+
+					foreach (Transform i in moreTiles) {
+						tiles.Add (i);
+					}
+				}
+			}
+		}
+
+		return tiles;
+	}
+
+	List<Transform> CheckNeighbourRight(Transform t) {
+		List<Transform> tiles = new List<Transform>();
+		tiles.Add (t);
+
+		Transform row = t.parent;
+		Transform column = row.parent;
+		Transform gameBoard = column.parent;
+
+		int siblingIndexRow = row.GetSiblingIndex ();
+		int siblingIndexCol = column.GetSiblingIndex ();
+		if (siblingIndexCol < gameBoard.childCount - 1) {
+			Transform colRight = gameBoard.GetChild (siblingIndexCol + 1);
+			Transform rowRight = colRight.GetChild (siblingIndexRow);
+			if (rowRight.childCount != 0) {
+				Transform tileRight = rowRight.GetChild (0);
+				if (tileRight.gameObject.name == t.gameObject.name) {
+					List<Transform> moreTiles = CheckNeighbourRight (tileRight);
+					foreach (Transform i in moreTiles) {
+						tiles.Add (i);
+					}
+				}
+			}
+		}
+		return tiles;
+	}
+
+	List<Transform> CheckNeighbourLeft(Transform t) {
+		List<Transform> tiles = new List<Transform>();
+		tiles.Add (t);
+
+		Transform row = t.parent;
+		Transform column = row.parent;
+		Transform gameBoard = column.parent;
+
+		int siblingIndexRow = row.GetSiblingIndex ();
+		int siblingIndexCol = column.GetSiblingIndex ();
+		if (siblingIndexCol > 0) {
+			Transform colLeft = gameBoard.GetChild (siblingIndexCol - 1);
+			Transform rowLeft = colLeft.GetChild (siblingIndexRow);
+			if (rowLeft.childCount != 0) {
+				Transform tileLeft = rowLeft.GetChild (0);
+				if (tileLeft.gameObject.name == t.gameObject.name) {
+					List<Transform> moreTiles = CheckNeighbourRight (tileLeft);
+					foreach (Transform i in moreTiles) {
+						tiles.Add (i);
+					}
+				}
+			}
+		}
+		return tiles;
 	}
 }

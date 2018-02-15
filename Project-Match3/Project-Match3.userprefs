@@ -1,9 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TileMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameController.cs" Line="30" Column="69" />
-      <File FileName="Assets\Scripts\TileMovement.cs" Line="13" Column="33" />
+      <File FileName="Assets\Scripts\GameController.cs" Line="36" Column="6" />
+      <File FileName="Assets\Scripts\TileMovement.cs" Line="72" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -28,7 +28,14 @@ public class GameController : MonoBehaviour {
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			mousePos.x = Mathf.Floor(mousePos.x - board.transform.position.x);
 			mousePos.y = Mathf.Floor(mousePos.y - board.transform.position.y);
-			Debug.Log (mousePos);
+
+			if (mousePos.x >= 0 && mousePos.x < NUM_COLS && mousePos.y >= 0 && mousePos.y < NUM_ROWS) {
+				Transform tileParent = board.transform.GetChild ((int)mousePos.x).GetChild ((int)mousePos.y);
+				if (tileParent.childCount != 0) {
+					Transform tile = tileParent.GetChild (0);
+					Destroy (tile.gameObject);
+				}
+			}
 		}
 	}
 
