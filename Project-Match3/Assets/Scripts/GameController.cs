@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour {
 
 	GameObject board;
 
+	Transform SelectedTile = null;
+
 	// Use this for initialization
 	void Start () {
 		board = Instantiate (GameBoardPreFab, this.transform);
@@ -33,7 +35,30 @@ public class GameController : MonoBehaviour {
 				Transform tileParent = board.transform.GetChild ((int)mousePos.x).GetChild ((int)mousePos.y);
 				if (tileParent.childCount != 0) {
 					Transform tile = tileParent.GetChild (0);
-					Destroy (tile.gameObject);
+
+				}
+			}
+
+			if (SelectedTile != null) {
+				TileMovement tm = SelectedTile.GetComponent<TileMovement> ();
+				tm.Deselect ();
+				SelectedTile = null;
+			}
+		}
+
+		if (Input.GetMouseButton(0)) {
+			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			mousePos.x = Mathf.Floor(mousePos.x - board.transform.position.x);
+			mousePos.y = Mathf.Floor(mousePos.y - board.transform.position.y);
+
+			if (mousePos.x >= 0 && mousePos.x < NUM_COLS && mousePos.y >= 0 && mousePos.y < NUM_ROWS) {
+				Transform tileParent = board.transform.GetChild ((int)mousePos.x).GetChild ((int)mousePos.y);
+				if (tileParent.childCount != 0) {
+					Transform tile = tileParent.GetChild (0);
+					TileMovement tm = tile.GetComponent<TileMovement> ();
+					tm.Select ();
+					Debug.Log ("Working");
+					SelectedTile = tile;
 				}
 			}
 		}

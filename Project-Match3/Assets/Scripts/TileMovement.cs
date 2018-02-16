@@ -7,17 +7,17 @@ public class TileMovement : MonoBehaviour {
 	Vector3 endPosition;
 	float speed = 5f;
 	bool moving = false;
+	bool rotating = false;
 
 	// Use this for initialization
 	void Start () {
-		speed = Random.Range (5f, 10f);
+		speed = Random.Range (2f, 8f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 		if (moving) {
-
 			Vector3 newPos = transform.position;
 			newPos.y = newPos.y - speed * Time.deltaTime;
 
@@ -27,11 +27,26 @@ public class TileMovement : MonoBehaviour {
 			} else {
 				transform.position = newPos;
 			}
-		} else {
+		} else if (rotating) {
+			float angle = 0;
+			while (rotating) {
+				angle = (angle + speed * Time.deltaTime) % (2*Mathf.PI);
+				transform.Rotate( 0, 0, angle);
+			}
+		}
+		else {
 			checkTileBelow ();
 			CheckMatching ();
 		}
 
+	}
+
+	public void Select() {
+		rotating = true;
+	}
+
+	public void Deselect() {
+		rotating = false;
 	}
 
 	public void Move(Vector3 pos){
